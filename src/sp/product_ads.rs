@@ -116,7 +116,7 @@ pub struct ListProductAdsResponse {
     pub product_ads: Vec<ProductAdsItem>,
     pub total_results: usize,
 }
-#[derive(Deserialize, Debug)]
+#[derive(Deserialize, Debug, Serialize)]
 #[serde(rename_all = "SCREAMING_SNAKE_CASE")]
 pub enum ProductAdsItemState {
     Archived,
@@ -127,7 +127,7 @@ pub enum ProductAdsItemState {
     Proposed,
     UserDeleted,
 }
-#[derive(Deserialize, Debug)]
+#[derive(Deserialize, Debug, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct ProductAdsItem {
     pub ad_group_id: String,
