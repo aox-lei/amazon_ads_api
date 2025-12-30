@@ -14,6 +14,7 @@ use std::sync::Arc;
 // ==============================================================================
 
 #[derive(Builder)]
+#[builder(on(String, into))]
 pub struct ListProductAds {
     ads_client: Arc<AdsClient>,
     profile_id: String,
