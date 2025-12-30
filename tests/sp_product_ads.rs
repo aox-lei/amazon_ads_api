@@ -1,5 +1,5 @@
-use ads_api::client;
-use ads_api::sp::product_ads::{ListProductAds, ListProductAdsFilter};
+use amazon_ads_api::client;
+use amazon_ads_api::sp::product_ads::{ListProductAds, ListProductAdsFilter};
 mod common;
 #[tokio::test]
 async fn list_product_ads_test() {

@@ -1,4 +1,4 @@
-use ads_api::region;
+use amazon_ads_api::region;
 #[tokio::test]
 async fn region_test() {
     dbg!(region::AmazonRegion::NA.auth_url());

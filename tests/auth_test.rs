@@ -1,4 +1,4 @@
-use ads_api::auth;
+use amazon_ads_api::auth;
 mod common;
 
 #[tokio::test]
