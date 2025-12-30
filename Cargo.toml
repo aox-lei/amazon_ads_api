@@ -1,6 +1,6 @@
 [package]
 name = "amazon_ads_api"
-version = "0.1.0"
+version = "0.1.2"
 edition = "2021"
 
 [dependencies]
@@ -16,8 +16,8 @@ reqwest-retry = "0.8"
 anyhow = { version = "1.0.98" }
 ttl_cache = { version = "0.5.1" }
 async-trait = "0.1.89"
-http = "1.4"
-cached={version="0.56", features = ["async"]}
+http = "^1"
+cached = { version = "0.56", features = ["async"] }
 
 [dev-dependencies]
 dotenvy = "0.15"
