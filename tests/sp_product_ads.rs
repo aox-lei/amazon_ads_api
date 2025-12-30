@@ -1,3 +1,5 @@
+use std::sync::Arc;
+
 use amazon_ads_api::client;
 use amazon_ads_api::sp::product_ads::{ListProductAds, ListProductAdsFilter};
 mod common;
@@ -11,6 +13,7 @@ async fn list_product_ads_test() {
         .client_secret(&credential.client_secret)
         .refresh_token(&credential.refresh_token)
         .build();
+    let ads_client = Arc::new(ads_client);
     let filter = ListProductAdsFilter::builder().build();
     let response = ListProductAds::builder()
         .ads_client(ads_client)

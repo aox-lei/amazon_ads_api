@@ -7,6 +7,7 @@ use list_product_ads_filter_builder::{
     IsUnset, SetAdGroupIdFilter, SetAdIdFilter, SetCampaignIdFilter, State,
 };
 use serde_with::skip_serializing_none;
+use std::sync::Arc;
 
 // ==============================================================================
 // ListProductAds 请求类
@@ -14,7 +15,7 @@ use serde_with::skip_serializing_none;
 
 #[derive(Builder)]
 pub struct ListProductAds {
-    ads_client: AdsClient,
+    ads_client: Arc<AdsClient>,
     profile_id: String,
     filter: ListProductAdsFilter,
 }
