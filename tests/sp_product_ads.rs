@@ -18,7 +18,6 @@ async fn list_product_ads_test() {
         .build();
     let ads_client = Arc::new(ads_client);
     let filter = ListProductAdsFilter::builder()
-        .ad_group_id_filter(vec!["aaaa"])
         .include_extended_data_fields(true)
         .build();
     let response = ListProductAds::builder()
@@ -28,7 +27,7 @@ async fn list_product_ads_test() {
         .build()
         .fetch()
         .await;
-    dbg!(response.unwrap().product_ads.len());
+    dbg!(response.unwrap().product_ads);
 }
 
 #[tokio::test]

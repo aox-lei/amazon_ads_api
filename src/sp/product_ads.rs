@@ -204,7 +204,9 @@ pub struct ProductAdItem {
 #[derive(Serialize, Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct ProductAdItemExtendedData {
+    #[serde(rename="creationDateTime")]
     pub creation_datetime: Option<DateTime<Utc>>,
+    #[serde(rename="lastUpdateDateTime")]
     pub last_update_datetime: Option<DateTime<Utc>>,
     pub serving_status_details: Option<Vec<ServingStatusDetail>>,
 }
