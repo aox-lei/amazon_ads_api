@@ -2,7 +2,7 @@ use serde::{Deserialize, Serialize};
 use serde_json::json;
 
 use crate::client::AdsClient;
-use crate::serde_util::wrap_include;
+use crate::util::wrap_include;
 use anyhow::Result;
 use bon::Builder;
 use chrono::{DateTime, Utc};
@@ -40,9 +40,12 @@ impl ListProductAds {
 #[serde(rename_all = "camelCase")]
 pub struct ListProductAdsFilter {
     #[serde(serialize_with = "wrap_include")]
+    #[builder(with=|items: Vec<&str>| items.into_iter().map(|s| s.to_string()).collect())]
     pub ad_group_id_filter: Option<Vec<String>>,
+
     #[serde(serialize_with = "wrap_include")]
     pub ad_id_filter: Option<Vec<String>>,
+
     #[serde(serialize_with = "wrap_include")]
     pub campaign_id_filter: Option<Vec<String>>,
 

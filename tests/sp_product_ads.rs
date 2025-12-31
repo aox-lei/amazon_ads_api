@@ -18,6 +18,7 @@ async fn list_product_ads_test() {
         .build();
     let ads_client = Arc::new(ads_client);
     let filter = ListProductAdsFilter::builder()
+        .ad_group_id_filter(vec!["aaaa"])
         .include_extended_data_fields(true)
         .build();
     let response = ListProductAds::builder()
@@ -53,6 +54,9 @@ async fn create_product_ads_test() {
         .ads_client(ads_client)
         .profile_id(credential.profile_id.unwrap())
         .product_ads(vec![item])
-        .build().fetch().await.unwrap();
+        .build()
+        .fetch()
+        .await
+        .unwrap();
     dbg!(&response);
 }
