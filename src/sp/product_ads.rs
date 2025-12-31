@@ -44,9 +44,11 @@ pub struct ListProductAdsFilter {
     pub ad_group_id_filter: Option<Vec<String>>,
 
     #[serde(serialize_with = "wrap_include")]
+    #[builder(with=|items: Vec<&str>| items.into_iter().map(|s| s.to_string()).collect())]
     pub ad_id_filter: Option<Vec<String>>,
 
     #[serde(serialize_with = "wrap_include")]
+    #[builder(with=|items: Vec<&str>| items.into_iter().map(|s| s.to_string()).collect())]
     pub campaign_id_filter: Option<Vec<String>>,
 
     pub include_extended_data_fields: Option<bool>,
