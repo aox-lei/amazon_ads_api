@@ -7,6 +7,7 @@ use reqwest::header;
 use reqwest::Response;
 use reqwest_middleware::{ClientBuilder, ClientWithMiddleware};
 
+#[derive(Debug)]
 pub struct AdsClient {
     inner: Arc<ClientWithMiddleware>,
     region: AmazonRegion,

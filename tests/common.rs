@@ -15,6 +15,7 @@ impl Default for Credential {
 
         let client_id =
             env::var("AMAZON_CLIENT_ID").expect("Missing AMAZON_CLIENT_ID in .env file");
+        dbg!(&client_id);
         let client_secret =
             env::var("AMAZON_CLIENT_SECRET").expect("Missing AMAZON_CLIENT_SECRET in .env file");
         let refresh_token =
