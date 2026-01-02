@@ -7,7 +7,7 @@ use anyhow::Result;
 use bon::Builder;
 use chrono::{DateTime, Utc};
 use serde_with::skip_serializing_none;
-use std::sync::Arc;
+use std::{collections::HashMap, sync::Arc};
 
 // ==============================================================================
 // ListProductAds 请求类
@@ -91,6 +91,7 @@ impl CreateProductAds {
     }
 }
 // --- 创建广告产品的单个项 -------------------
+#[skip_serializing_none]
 #[derive(Builder, Debug, Serialize)]
 #[serde(rename_all = "camelCase")]
 #[builder(on(String, into))]
@@ -145,7 +146,7 @@ pub struct CreateProductAdsMutationError {
 #[serde(rename_all = "camelCase")]
 pub struct CreateProductAdsMutationErrorDetail {
     pub error_type: String,
-    pub error_value: CreateProductAdsErrorValue,
+    pub error_value:serde_json::Value,
 }
 
 #[derive(Debug, Deserialize)]

@@ -43,10 +43,10 @@ async fn create_product_ads_test() {
     let ads_client = Arc::new(ads_client);
 
     let item = ProductAdsItemForCreate::builder()
-        .ad_group_id("515228709275405")
-        .campaign_id("358885870824039")
-        .asin("B0FHQ2PTZD")
-        .sku("KM-bn7k3g-2pcs-Diameter354inH315in")
+        .ad_group_id("481941107236736")
+        .campaign_id("494576620738611")
+        .asin("B0CGDKMGXZ")
+        .sku("KM-94373")
         .state(amazon_ads_api::sp::product_ads::StateEnumForCreate::Enabled)
         .build();
     let response = CreateProductAds::builder()
