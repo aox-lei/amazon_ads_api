@@ -1,7 +1,7 @@
 use std::sync::Arc;
 
 use amazon_ads_api::client;
-use amazon_ads_api::sp::product_ads::{
+use amazon_ads_api::v3::product_ads::{
     CreateProductAds, ListProductAds, ListProductAdsFilter, ProductAdsItemForCreate,
 };
 mod common;
@@ -10,7 +10,7 @@ mod common;
 async fn list_product_ads_test() {
     let credential = common::Credential::default();
     let ads_client = client::AdsClient::builder()
-        .seller_id("aaaa")
+        .seller_id("AUXYJQK8O7TFU")
         .country_code("UK")
         .client_id(&credential.client_id)
         .client_secret(&credential.client_secret)
@@ -19,6 +19,8 @@ async fn list_product_ads_test() {
     let ads_client = Arc::new(ads_client);
     let filter = ListProductAdsFilter::builder()
         .include_extended_data_fields(true)
+        // .ad_group_id_filter(vec!["5000096132751368993"])
+        .ad_id_filter(vec!["397867212646997"])
         .build();
     let response = ListProductAds::builder()
         .ads_client(ads_client)
@@ -47,7 +49,7 @@ async fn create_product_ads_test() {
         .campaign_id("494576620738611")
         .asin("B0CGDKMGXZ")
         .sku("KM-94373")
-        .state(amazon_ads_api::sp::product_ads::StateEnumForCreate::Enabled)
+        .state(amazon_ads_api::v3::product_ads::StateEnumForCreate::Enabled)
         .build();
     let response = CreateProductAds::builder()
         .ads_client(ads_client)

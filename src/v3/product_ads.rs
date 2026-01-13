@@ -2,12 +2,12 @@ use serde::{Deserialize, Serialize};
 use serde_json::json;
 
 use crate::client::AdsClient;
-use crate::util::wrap_include;
+use crate::util::wrap_include_optional;
 use anyhow::Result;
 use bon::Builder;
 use chrono::{DateTime, Utc};
 use serde_with::skip_serializing_none;
-use std::{collections::HashMap, sync::Arc};
+use std::sync::Arc;
 
 // ==============================================================================
 // ListProductAds 请求类
@@ -39,15 +39,15 @@ impl ListProductAds {
 #[derive(Serialize, Builder, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct ListProductAdsFilter {
-    #[serde(serialize_with = "wrap_include")]
+    #[serde(serialize_with = "wrap_include_optional")]
     #[builder(with=|items: Vec<&str>| items.into_iter().map(|s| s.to_string()).collect())]
     pub ad_group_id_filter: Option<Vec<String>>,
 
-    #[serde(serialize_with = "wrap_include")]
+    #[serde(serialize_with = "wrap_include_optional")]
     #[builder(with=|items: Vec<&str>| items.into_iter().map(|s| s.to_string()).collect())]
     pub ad_id_filter: Option<Vec<String>>,
 
-    #[serde(serialize_with = "wrap_include")]
+    #[serde(serialize_with = "wrap_include_optional")]
     #[builder(with=|items: Vec<&str>| items.into_iter().map(|s| s.to_string()).collect())]
     pub campaign_id_filter: Option<Vec<String>>,
 
@@ -146,7 +146,7 @@ pub struct CreateProductAdsMutationError {
 #[serde(rename_all = "camelCase")]
 pub struct CreateProductAdsMutationErrorDetail {
     pub error_type: String,
-    pub error_value:serde_json::Value,
+    pub error_value: serde_json::Value,
 }
 
 #[derive(Debug, Deserialize)]
@@ -205,9 +205,9 @@ pub struct ProductAdItem {
 #[derive(Serialize, Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct ProductAdItemExtendedData {
-    #[serde(rename="creationDateTime")]
+    #[serde(rename = "creationDateTime")]
     pub creation_datetime: Option<DateTime<Utc>>,
-    #[serde(rename="lastUpdateDateTime")]
+    #[serde(rename = "lastUpdateDateTime")]
     pub last_update_datetime: Option<DateTime<Utc>>,
     pub serving_status_details: Option<Vec<ServingStatusDetail>>,
 }

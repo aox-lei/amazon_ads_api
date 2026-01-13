@@ -18,6 +18,7 @@ async-trait = "0.1.89"
 http = "^1"
 cached = { version = "0.56", features = ["async"] }
 chrono = {version="0.4", features = ["serde"]}
-
+serde-inline-default = "1.0.0"
+strum = {version="0.27.2", features = ["derive"]}
 [dev-dependencies]
 dotenvy = "0.15"
