@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 use strum::{AsRefStr, Display, EnumString};
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Serialize, Deserialize)]
 pub enum SPMarketplace {
     AE,
     AU,
@@ -35,10 +35,19 @@ pub enum SPState {
     PAUSED,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Serialize)]
+#[serde(rename_all = "SCREAMING_SNAKE_CASE")]
+pub enum SPCreateState {
+    Enabled,
+    Paused,
+}
+
+#[derive(Debug, Default, Serialize, Deserialize)]
+#[serde(rename_all = "SCREAMING_SNAKE_CASE")]
 pub enum SPProductIdType {
-    ASIN,
-    SKU,
+    #[default]
+    Asin,
+    Sku,
 }
 
 #[derive(Debug, Deserialize)]
@@ -239,3 +248,4 @@ pub enum SPAdStateFilter {
     Paused,
     Archived,
 }
+

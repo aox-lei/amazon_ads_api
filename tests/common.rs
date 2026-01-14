@@ -1,3 +1,4 @@
+use amazon_ads_api::client;
 use dotenvy::dotenv;
 use std::env;
 
@@ -26,4 +27,17 @@ impl Default for Credential {
             profile_id: Some("2019288267937185".to_string()),
         }
     }
+}
+
+#[allow(dead_code)]
+pub fn get_ads_client() -> (client::AdsClient, String) {
+    let credential = Credential::default();
+    let ads_client = client::AdsClient::builder()
+        .seller_id("AUXYJQK8O7TFU")
+        .country_code("UK")
+        .client_id(&credential.client_id)
+        .client_secret(&credential.client_secret)
+        .refresh_token(&credential.refresh_token)
+        .build();
+    (ads_client, credential.profile_id.unwrap())
 }

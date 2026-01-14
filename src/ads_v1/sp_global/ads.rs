@@ -1,25 +1,27 @@
 use serde::{Deserialize, Serialize};
 use serde_json::json;
 
+use crate::ads_v1::types::ErrorsIndex;
 use crate::client::AdsClient;
 use crate::util::{wrap_include, wrap_include_optional};
-
 use anyhow::Result;
-use bon::{bon, builder, Builder};
+use bon::{bon, Builder};
 
+use super::types::enums::SPGlobalMarketplace;
 use super::types::{
-    ads::{SPAd, SPAdCreate, SPAdMultiStatusSuccess},
-    enums::SPAdStateFilter,
+    ads::{SPGlobalAd, SPGlobalAdCreate, SPGlobalAdMultiStatusSuccess, SPGlobalAdPartialIndex},
+    enums::SPGlobalAdStateFilter,
 };
-use crate::ads_v1::types::ErrorsIndex;
 use serde_with::skip_serializing_none;
+use std::str::FromStr;
 use std::sync::Arc;
 
+// region ListAds
 #[derive(Builder)]
 #[builder(on(String, into))]
 pub struct ListAds {
     ads_client: Arc<AdsClient>,
-    profile_id: String,
+    account_id: String,
     filter: ListAdsFilter,
 }
 
@@ -30,7 +32,7 @@ impl ListAds {
             .ads_client
             .post()
             .path("/adsApi/v1/query/ads")
-            .profile_id(&self.profile_id)
+            .account_id(&self.account_id)
             .json_body(filter)
             .call()
             .await?;
@@ -39,40 +41,17 @@ impl ListAds {
     }
 }
 
-#[derive(Builder)]
-#[builder(on(String, into))]
-pub struct DelAds {
-    ads_client: Arc<AdsClient>,
-    profile_id: String,
-    #[builder(with=|item:Vec<&str>| item.into_iter().map(|item| item.to_string()).collect::<Vec<String>>())]
-    ad_ids: Vec<String>,
-}
+// endregion
 
-impl DelAds {
-    pub async fn fetch(self) -> Result<OperationAdsResponse> {
-        let json_body = json!({
-            "adIds": self.ad_ids
-        });
-        let res = self
-            .ads_client
-            .post()
-            .path("/adsApi/v1/delete/ads")
-            .profile_id(&self.profile_id)
-            .json_body(json_body)
-            .call()
-            .await?;
-        let data = res.json::<OperationAdsResponse>().await?;
-        Ok(data)
-    }
-}
-
+// region CreateAds
 #[derive(Builder)]
 #[builder(on(String, into))]
 pub struct CreateAds {
     ads_client: Arc<AdsClient>,
-    profile_id: String,
-    ads: Vec<SPAdCreate>,
+    account_id: String,
+    ads: Vec<SPGlobalAdCreate>,
 }
+
 #[bon]
 impl CreateAds {
     pub async fn fetch(self) -> Result<OperationAdsResponse> {
@@ -83,7 +62,7 @@ impl CreateAds {
             .ads_client
             .post()
             .path("/adsApi/v1/create/ads")
-            .profile_id(&self.profile_id)
+            .account_id(&self.account_id)
             .json_body(json_body)
             .call()
             .await?;
@@ -91,19 +70,49 @@ impl CreateAds {
     }
 
     #[builder]
-    pub fn by_asins(ad_group_id: &str, asins: Vec<&str>) -> Vec<SPAdCreate> {
+    pub fn by_asins(
+        ad_group_id: &str,
+        country_codes: Vec<&str>,
+        asins: Vec<&str>,
+    ) -> Vec<SPGlobalAdCreate> {
+        let marketplaces: Vec<_> = country_codes
+            .iter()
+            .map(|country_code| SPGlobalMarketplace::from_str(country_code).unwrap())
+            .collect();
+
         asins
             .into_iter()
-            .map(|asin| SPAdCreate::builder(ad_group_id).asin(asin).build())
+            .map(|asin| {
+                SPGlobalAdCreate::builder(ad_group_id)
+                    .asin(country_codes.clone(), asin)
+                    .marketplaces(marketplaces.clone())
+                    .build()
+            })
             .collect()
     }
     #[builder]
-    pub fn by_skus(ad_group_id: &str, skus: Vec<&str>) -> Vec<SPAdCreate> {
+    pub fn by_skus(
+        ad_group_id: &str,
+        country_codes: Vec<&str>,
+        skus: Vec<&str>,
+    ) -> Vec<SPGlobalAdCreate> {
+        let marketplaces: Vec<_> = country_codes
+            .iter()
+            .map(|country_code| SPGlobalMarketplace::from_str(country_code).unwrap())
+            .collect();
+
         skus.into_iter()
-            .map(|sku| SPAdCreate::builder(ad_group_id).sku(sku).build())
+            .map(|sku| {
+                SPGlobalAdCreate::builder(ad_group_id)
+                    .sku(country_codes.clone(), sku)
+                    .marketplaces(marketplaces.clone())
+                    .build()
+            })
             .collect()
     }
 }
+
+// endregion
 
 // region ListAdsFilter
 
@@ -124,15 +133,16 @@ pub struct ListAdsFilter {
     #[builder(with=|items: Vec<&str>| items.into_iter().map(|s| s.to_string()).collect())]
     pub ad_id_filter: Option<Vec<String>>,
 
-    #[serde(serialize_with = "wrap_include_optional")]
+    #[serde(serialize_with = "wrap_include")]
+    #[builder(default = vec!["GLOBAL".to_string()])]
     #[builder(with=|items: Vec<&str>| items.into_iter().map(|s| s.to_string()).collect())]
-    pub campaign_id_filter: Option<Vec<String>>,
+    pub marketplace_scope_filter: Vec<String>,
 
     #[builder(default = 1000)]
     max_results: i32,
 
     #[serde(serialize_with = "wrap_include_optional")]
-    state_filter: Option<Vec<SPAdStateFilter>>,
+    state_filter: Option<Vec<SPGlobalAdStateFilter>>,
 }
 
 // endregion
@@ -140,7 +150,7 @@ pub struct ListAdsFilter {
 #[derive(Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct ListAdsResponse {
-    pub ads: Option<Vec<SPAd>>,
+    pub ads: Option<Vec<SPGlobalAd>>,
     pub next_token: Option<String>,
 }
 
@@ -148,5 +158,6 @@ pub struct ListAdsResponse {
 #[serde(rename_all = "camelCase")]
 pub struct OperationAdsResponse {
     pub error: Option<Vec<ErrorsIndex>>,
-    pub success: Option<Vec<SPAdMultiStatusSuccess>>,
+    pub partial_success: Option<Vec<SPGlobalAdPartialIndex>>,
+    pub success: Option<Vec<SPGlobalAdMultiStatusSuccess>>,
 }

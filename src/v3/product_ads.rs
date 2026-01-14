@@ -26,7 +26,11 @@ impl ListProductAds {
         let filter = serde_json::to_value(&self.filter)?;
         let response = self
             .ads_client
-            .post("/sp/productAds/list", &self.profile_id, filter)
+            .post()
+            .path("/sp/productAds/list")
+            .profile_id(&self.profile_id)
+            .json_body(filter)
+            .call()
             .await?;
         let data = response.json::<ListProductAdsResponse>().await?;
         Ok(data)
@@ -84,7 +88,11 @@ impl CreateProductAds {
         });
         let response = self
             .ads_client
-            .post("/sp/productAds", &self.profile_id, json_body)
+            .post()
+            .path("/sp/productAds")
+            .profile_id(&self.profile_id)
+            .json_body(json_body)
+            .call()
             .await?;
         let data = response.json::<CreateProductAdsResponse>().await?;
         Ok(data)

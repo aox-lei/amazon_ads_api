@@ -39,22 +39,32 @@ impl AdsClient {
             region,
         }
     }
-
+    #[builder]
     pub async fn post(
         &self,
         path: &str,
-        profile_id: &str,
+        profile_id: Option<&str>,
+        account_id: Option<&str>,
         json_body: serde_json::Value,
     ) -> Result<Response> {
         let url = self.url(path);
         let json_string = serde_json::to_string(&json_body)?;
-        let media_type = "application/vnd.spProductAd.v3+json";
-        let res = self
-            .inner
-            .post(url)
-            .header("Amazon-Advertising-API-Scope", profile_id)
-            .header(header::CONTENT_TYPE, media_type)
-            .header(header::ACCEPT, media_type)
+
+        let mut req_builder = self.inner.post(url);
+        if let Some(profile_id) = profile_id {
+            let media_type = "application/vnd.spProductAd.v3+json";
+            req_builder = req_builder
+                .header("Amazon-Advertising-API-Scope", profile_id)
+                .header(header::CONTENT_TYPE, media_type)
+                .header(header::ACCEPT, media_type);
+        }
+        if let Some(account_id) = account_id {
+            req_builder = req_builder
+                .header("Amazon-Ads-AccountId", account_id)
+                .header(header::CONTENT_TYPE, "application/json")
+        }
+
+        let res = req_builder
             .body(json_string)
             .send()
             .await?
