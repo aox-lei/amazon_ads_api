@@ -28,7 +28,7 @@ pub enum SPMarketplace {
     ZA,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, AsRefStr, PartialEq, Eq)]
 pub enum SPState {
     ARCHIVED,
     ENABLED,
@@ -42,7 +42,7 @@ pub enum SPCreateState {
     Paused,
 }
 
-#[derive(Debug, Default, Serialize, Deserialize)]
+#[derive(Debug, Default, Serialize, Deserialize, AsRefStr, PartialEq, Eq)]
 #[serde(rename_all = "SCREAMING_SNAKE_CASE")]
 pub enum SPProductIdType {
     #[default]
@@ -50,7 +50,7 @@ pub enum SPProductIdType {
     Sku,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, AsRefStr, PartialEq, Eq)]
 #[serde(rename_all = "SCREAMING_SNAKE_CASE")]
 pub enum SPDeliveryStatus {
     Delivering,
@@ -248,4 +248,3 @@ pub enum SPAdStateFilter {
     Paused,
     Archived,
 }
-

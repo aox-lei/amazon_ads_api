@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 use strum::{AsRefStr, Display, EnumString};
 
-#[derive(Debug, Serialize, Deserialize, Display, AsRefStr, EnumString)]
+#[derive(Debug, Serialize, Deserialize, Display, AsRefStr, EnumString, PartialEq,Eq)]
 #[strum(serialize_all = "SCREAMING_SNAKE_CASE")]
 #[serde(rename_all = "SCREAMING_SNAKE_CASE")]
 pub enum SPGlobalAdStateFilter {
@@ -10,7 +10,7 @@ pub enum SPGlobalAdStateFilter {
     Archived,
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, AsRefStr, PartialEq, Eq)]
 pub enum SPGlobalState {
     ARCHIVED,
     ENABLED,
@@ -50,7 +50,7 @@ pub enum SPGlobalMarketplace {
     US,
 }
 
-#[derive(Debug, Default, Serialize, Deserialize)]
+#[derive(Debug, Default, Serialize, Deserialize, AsRefStr, PartialEq, Eq)]
 #[serde(rename_all = "SCREAMING_SNAKE_CASE")]
 pub enum SPGlobalProductIdType {
     #[default]
