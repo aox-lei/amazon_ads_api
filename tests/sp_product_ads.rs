@@ -19,8 +19,8 @@ async fn list_product_ads_test() {
     let ads_client = Arc::new(ads_client);
     let filter = ListProductAdsFilter::builder()
         .include_extended_data_fields(true)
-        // .ad_group_id_filter(vec!["5000096132751368993"])
-        .ad_id_filter(vec!["397867212646997"])
+        .ad_group_id_filter(vec!["546821283664002"])
+        // .ad_id_filter(vec!["397867212646997"])
         .build();
     let response = ListProductAds::builder()
         .ads_client(ads_client)
@@ -29,7 +29,7 @@ async fn list_product_ads_test() {
         .build()
         .fetch()
         .await;
-    dbg!(response.unwrap().product_ads);
+    dbg!(response.unwrap());
 }
 
 #[tokio::test]
