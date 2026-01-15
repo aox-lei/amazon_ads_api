@@ -8,7 +8,7 @@ async fn list_ads_test() {
     let (ads_client, profile_id) = common::get_ads_client();
     let ads_client = Arc::new(ads_client);
     let filter = ListAdsFilter::builder()
-    .ad_group_id_filter(vec!["546821283664002"])
+        .ad_group_id_filter(vec!["546821283664002"])
         .max_results(10)
         // .ad_id_filter(vec!["397867212646997"])
         .build();
@@ -18,6 +18,7 @@ async fn list_ads_test() {
         .filter(filter)
         .build()
         .fetch()
+        .call()
         .await;
     dbg!(&response);
 }
@@ -44,7 +45,11 @@ async fn create_ads_test() {
         .ad_group_id("546821283664002")
         .skus(vec!["KM-HBW0Jj-Green-"])
         .call();
-    let api = CreateAds::builder().ads(product).ads_client(ads_client).profile_id(profile_id).build();
+    let api = CreateAds::builder()
+        .ads(product)
+        .ads_client(ads_client)
+        .profile_id(profile_id)
+        .build();
     let res = api.fetch().await;
     dbg!(&res);
 }

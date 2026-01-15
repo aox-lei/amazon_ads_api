@@ -22,10 +22,14 @@ pub struct ListAds {
     profile_id: String,
     filter: ListAdsFilter,
 }
-
+#[bon]
 impl ListAds {
-    pub async fn fetch(self) -> Result<ListAdsResponse> {
-        let filter = serde_json::to_value(&self.filter)?;
+    #[builder]
+    pub async fn fetch(self, next_token: Option<&str>) -> Result<ListAdsResponse> {
+        let mut filter = serde_json::to_value(&self.filter)?;
+        if let Some(next_token) = next_token {
+            filter["nextToken"] = json!(next_token);
+        }
         let response = self
             .ads_client
             .post()

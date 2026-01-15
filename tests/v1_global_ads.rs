@@ -18,6 +18,7 @@ async fn list_ads_test() {
         .filter(filter)
         .build()
         .fetch()
+        .call()
         .await;
     dbg!(&response);
 }
