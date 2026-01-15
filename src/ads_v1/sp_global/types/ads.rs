@@ -40,7 +40,7 @@ pub struct SPGlobalAd {
     pub marketplaces: Vec<SPGlobalMarketplace>,
     pub state: SPGlobalState,
     pub status: Option<SPGlobalStatus>,
-    pub tags: Vec<SPGlobalTag>,
+    pub tags: Option<Vec<SPGlobalTag>>,
 }
 
 #[skip_serializing_none]

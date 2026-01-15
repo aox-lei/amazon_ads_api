@@ -9,7 +9,7 @@ async fn list_ads_test() {
     let ads_client = Arc::new(ads_client);
     let filter = ListAdsFilter::builder()
         .max_results(10)
-        // .ad_group_id_filter(vec!["5000096132751368993", "485766861743528", "546821283664002", "4999899225094945252"])
+        .ad_group_id_filter(vec!["5000096132751368993", "485766861743528", "546821283664002", "4999899225094945252"])
         // .ad_id_filter(vec!["397867212646997"])
         .build();
     let response = ListAds::builder()
