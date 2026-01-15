@@ -271,7 +271,6 @@ pub struct SPGlobalAdPartialIndex {
 #[serde(rename_all = "camelCase")]
 pub struct SPGlobalAdMultiStatusSuccess {
     pub ad: SPGlobalAd,
-    pub errors: Vec<Error>,
     pub index: i32,
 }
 
