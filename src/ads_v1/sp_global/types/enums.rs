@@ -52,6 +52,7 @@ pub enum SPGlobalMarketplace {
 
 #[derive(Debug, Default, Serialize, Deserialize, AsRefStr, PartialEq, Eq)]
 #[serde(rename_all = "SCREAMING_SNAKE_CASE")]
+#[strum(serialize_all = "SCREAMING_SNAKE_CASE")]
 pub enum SPGlobalProductIdType {
     #[default]
     Asin,

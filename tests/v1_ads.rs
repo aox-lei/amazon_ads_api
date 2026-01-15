@@ -10,7 +10,6 @@ async fn list_ads_test() {
     let filter = ListAdsFilter::builder()
         .ad_group_id_filter(vec!["546821283664002"])
         .max_results(10)
-        // .ad_id_filter(vec!["397867212646997"])
         .build();
     let response = ListAds::builder()
         .ads_client(ads_client)
