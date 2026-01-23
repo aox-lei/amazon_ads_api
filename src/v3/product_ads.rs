@@ -17,7 +17,6 @@ use std::sync::Arc;
 #[builder(on(String, into))]
 pub struct ListProductAds {
     ads_client: Arc<AdsClient>,
-    profile_id: String,
     filter: ListProductAdsFilter,
 }
 
@@ -28,8 +27,8 @@ impl ListProductAds {
             .ads_client
             .post()
             .path("/sp/productAds/list")
-            .profile_id(&self.profile_id)
             .json_body(filter)
+            .content_type("application/vnd.spProductAd.v3+json")
             .call()
             .await?;
         let data = response.json::<ListProductAdsResponse>().await?;
@@ -77,7 +76,6 @@ pub struct ListProductAdsResponse {
 #[builder(on(String, into))]
 pub struct CreateProductAds {
     ads_client: Arc<AdsClient>,
-    profile_id: String,
     product_ads: Vec<ProductAdsItemForCreate>,
 }
 
@@ -90,7 +88,6 @@ impl CreateProductAds {
             .ads_client
             .post()
             .path("/sp/productAds")
-            .profile_id(&self.profile_id)
             .json_body(json_body)
             .call()
             .await?;

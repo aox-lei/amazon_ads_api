@@ -21,7 +21,6 @@ use std::sync::Arc;
 #[builder(on(String, into))]
 pub struct ListAds {
     ads_client: Arc<AdsClient>,
-    account_id: String,
     filter: ListAdsFilter,
 }
 #[bon]
@@ -36,7 +35,6 @@ impl ListAds {
             .ads_client
             .post()
             .path("/adsApi/v1/query/ads")
-            .account_id(&self.account_id)
             .json_body(filter)
             .call()
             .await?;
@@ -52,7 +50,6 @@ impl ListAds {
 #[builder(on(String, into))]
 pub struct CreateAds {
     ads_client: Arc<AdsClient>,
-    account_id: String,
     ads: Vec<SPGlobalAdCreate>,
 }
 
@@ -66,7 +63,6 @@ impl CreateAds {
             .ads_client
             .post()
             .path("/adsApi/v1/create/ads")
-            .account_id(&self.account_id)
             .json_body(json_body)
             .call()
             .await?;

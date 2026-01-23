@@ -5,3 +5,4 @@ pub mod client;
 pub mod util;
 pub mod v3;
 pub mod ads_v1;
+pub mod products;

@@ -1,4 +1,5 @@
 use amazon_ads_api::client;
+use bon::builder;
 use dotenvy::dotenv;
 use std::env;
 
@@ -7,7 +8,6 @@ pub struct Credential {
     pub client_id: String,
     pub client_secret: String,
     pub refresh_token: String,
-    pub profile_id: Option<String>,
 }
 
 impl Default for Credential {
@@ -24,13 +24,13 @@ impl Default for Credential {
             client_id,
             client_secret,
             refresh_token,
-            profile_id: Some("2019288267937185".to_string()),
         }
     }
 }
 
 #[allow(dead_code)]
-pub fn get_ads_client() -> (client::AdsClient, String) {
+#[builder]
+pub fn get_ads_client(account_id: Option<&str>, profile_id: Option<&str>) -> client::AdsClient {
     let credential = Credential::default();
     let ads_client = client::AdsClient::builder()
         .seller_id("AUXYJQK8O7TFU")
@@ -38,6 +38,20 @@ pub fn get_ads_client() -> (client::AdsClient, String) {
         .client_id(&credential.client_id)
         .client_secret(&credential.client_secret)
         .refresh_token(&credential.refresh_token)
+        .maybe_account_id(account_id)
+        .maybe_profile_id(profile_id)
         .build();
-    (ads_client, credential.profile_id.unwrap())
+    ads_client
+}
+
+#[allow(dead_code)]
+pub fn account_id() -> String {
+    dotenv().ok();
+    env::var("AMAZON_ACCOUNT_ID").expect("Missing AMAZON_ACCOUNT_ID in .env file")
+}
+
+#[allow(dead_code)]
+pub fn profile_id() -> String {
+    dotenv().ok();
+    env::var("AMAZON_PROFILE_ID").expect("Missing AMAZON_PROFILE_ID in .env file")
 }

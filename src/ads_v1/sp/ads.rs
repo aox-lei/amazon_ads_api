@@ -19,7 +19,6 @@ use std::sync::Arc;
 #[builder(on(String, into))]
 pub struct ListAds {
     ads_client: Arc<AdsClient>,
-    profile_id: String,
     filter: ListAdsFilter,
 }
 #[bon]
@@ -34,7 +33,6 @@ impl ListAds {
             .ads_client
             .post()
             .path("/adsApi/v1/query/ads")
-            .profile_id(&self.profile_id)
             .json_body(filter)
             .call()
             .await?;
@@ -47,7 +45,6 @@ impl ListAds {
 #[builder(on(String, into))]
 pub struct DelAds {
     ads_client: Arc<AdsClient>,
-    profile_id: String,
     #[builder(with=|item:Vec<&str>| item.into_iter().map(|item| item.to_string()).collect::<Vec<String>>())]
     ad_ids: Vec<String>,
 }
@@ -61,7 +58,6 @@ impl DelAds {
             .ads_client
             .post()
             .path("/adsApi/v1/delete/ads")
-            .profile_id(&self.profile_id)
             .json_body(json_body)
             .call()
             .await?;
@@ -74,7 +70,6 @@ impl DelAds {
 #[builder(on(String, into))]
 pub struct CreateAds {
     ads_client: Arc<AdsClient>,
-    profile_id: String,
     ads: Vec<SPAdCreate>,
 }
 #[bon]
@@ -87,7 +82,6 @@ impl CreateAds {
             .ads_client
             .post()
             .path("/adsApi/v1/create/ads")
-            .profile_id(&self.profile_id)
             .json_body(json_body)
             .call()
             .await?;
