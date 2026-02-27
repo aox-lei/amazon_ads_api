@@ -42,6 +42,13 @@ pub enum SPCreateState {
     Paused,
 }
 
+#[derive(Debug, Serialize)]
+#[serde(rename_all = "SCREAMING_SNAKE_CASE")]
+pub enum SPUpdateState {
+    Enabled,
+    Paused,
+}
+
 #[derive(Debug, Default, Serialize, Deserialize, AsRefStr, PartialEq, Eq)]
 #[serde(rename_all = "SCREAMING_SNAKE_CASE")]
 #[strum(serialize_all = "SCREAMING_SNAKE_CASE")]
@@ -248,4 +255,83 @@ pub enum SPAdStateFilter {
     Enabled,
     Paused,
     Archived,
+}
+
+#[derive(Debug, Serialize, Deserialize, Display, AsRefStr, EnumString)]
+#[strum(serialize_all = "SCREAMING_SNAKE_CASE")]
+#[serde(rename_all = "SCREAMING_SNAKE_CASE")]
+pub enum SPTargetType {
+    Keyword,
+    Product,
+    ProductCategory,
+    Location,
+    Theme,
+}
+
+#[derive(Debug, Serialize, Deserialize, Display, AsRefStr, EnumString)]
+#[strum(serialize_all = "SCREAMING_SNAKE_CASE")]
+#[serde(rename_all = "SCREAMING_SNAKE_CASE")]
+pub enum SPTargetLevel {
+    AdGroup,
+    Campaign,
+}
+
+#[derive(Debug, Serialize, Deserialize, Display, AsRefStr)]
+pub enum SPCurrencyCode {
+    AED, // 阿联酋迪拉姆
+    AUD, // 澳大利亚元
+    BRL, // 巴西雷亚尔
+    CAD, // 加拿大元
+    CHF, // 瑞士法郎
+    CNY, // 人民币
+    DKK, // 丹麦克朗
+    EGP, // 埃及镑
+    EUR, // 欧元
+    GBP, // 英镑
+    INR, // 印度卢比
+    JPY, // 日元
+    MXN, // 墨西哥比索
+    MXP, // 墨西哥比索 (旧)
+    NGN, // 尼日利亚奈拉
+    NOK, // 挪威克朗
+    NZD, // 新西兰元
+    PLN, // 波兰兹罗提
+    SAR, // 沙特里亚尔
+    SEK, // 瑞典克朗
+    SGD, // 新加坡元
+    TRY, // 土耳其里拉
+    USD, // 美元
+    ZAR, // 南非兰特
+}
+
+#[derive(Debug, Serialize, Deserialize, Display, AsRefStr, EnumString)]
+#[strum(serialize_all = "SCREAMING_SNAKE_CASE")]
+#[serde(rename_all = "SCREAMING_SNAKE_CASE")]
+pub enum SPKeywordMatchType {
+    Broad,
+    Exact,
+    Phrase,
+}
+
+#[derive(Debug, Serialize, Deserialize, Display, AsRefStr, EnumString)]
+#[strum(serialize_all = "SCREAMING_SNAKE_CASE")]
+#[serde(rename_all = "SCREAMING_SNAKE_CASE")]
+pub enum SPProductMatchType {
+    ProductExact,
+    ProductSimilar,
+}
+
+#[derive(Debug, Serialize, Deserialize, Display, AsRefStr, EnumString)]
+#[strum(serialize_all = "SCREAMING_SNAKE_CASE")]
+#[serde(rename_all = "SCREAMING_SNAKE_CASE")]
+pub enum SPThemeMatchType {
+    KeywordsCloseMatch,                         // 关键词和广告紧密匹配
+    KeywordsLooseMatch,                         // 关键词和广告松散匹配
+    KeywordsRelatedToGifts,                     // 礼物相关的搜索词。
+    KeywordsRelatedToPeerBrandsProductCategory, // 搜索词是指消费者在搜索和浏览与您广告产品类别相同的其他品牌产品时经常使用的关键词。系统会自动选择同类品牌。
+    KeywordsRelatedToPrimeDay, // 消费者在 Prime Day 期间可能使用的搜索词。这些关键词可以包括与活动相关的词语，例如“Prime Day”，以及与产品相关的词语。这些关键词可以帮助您在促销活动期间扩大受众范围。
+    KeywordsRelatedToYourBrand, // 与您的品牌相关的搜索词。
+    KeywordsRelatedToYourProductCategory, // 购物者经常用来搜索与您推广的产品属于同一类别的产品的搜索词。
+    ProductComplements,                   // 与广告产品互补的产品。
+    ProductSubstitutes,                   // 可替代广告宣传产品的其他产品。
 }
