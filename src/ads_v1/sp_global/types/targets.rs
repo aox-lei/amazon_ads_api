@@ -34,8 +34,8 @@ pub struct SPGlobalTarget {
     #[serde(rename = "lastUpdatedDateTime")]
     pub last_updated_datetime: Option<DateTime<Utc>>,
     pub marketplace_configurations: Option<Vec<SPGlobalMarketplaceTargetConfigurations>>,
-    pub marketplace_score: String,
-    pub marketplaces: Vec<Vec<SPGlobalMarketplace>>,
+    pub marketplace_scope: String,
+    pub marketplaces: Vec<SPGlobalMarketplace>,
     pub negative: bool,
     pub state: SPGlobalState,
     pub status: Option<SPGlobalStatus>,
