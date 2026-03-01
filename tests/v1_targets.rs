@@ -12,7 +12,7 @@ async fn list_targets_test() {
         .call();
     let ads_client = Arc::new(ads_client);
     let filter = ListTargetsFilter::builder()
-        .ad_group_id_filter(vec!["294948230297731"])
+        .ad_group_id_filter(vec!["456590468871638"])
         .target_type_filter(vec![SPTargetType::Theme])
         .build();
     let response = ListTargets::builder()
@@ -31,7 +31,7 @@ async fn update_target_test() {
         .profile_id(&common::profile_id())
         .call();
     let ads_client = Arc::new(ads_client);
-    let body = SPTargetUpdate::builder("214060908268872").bid(0.02).build();
+    let body = SPTargetUpdate::builder("216792859190825").bid(0.02).build();
 
     let api = UpdateTarget::builder()
         .targets(vec![body])

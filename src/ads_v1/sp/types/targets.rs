@@ -8,6 +8,7 @@ use bon::Builder;
 use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
+use std::str::FromStr;
 
 // region ListTargets
 #[derive(Debug, Deserialize)]
@@ -152,6 +153,7 @@ pub struct SPTargetUpdate {
     pub target_id: String,
     #[builder(field)]
     pub bid: Option<SPUpdateTargetBid>,
+    #[builder(field)]
     pub state: Option<SPUpdateState>,
     pub tags: Option<Vec<SPCreateTag>>,
 }
@@ -160,6 +162,12 @@ impl<S: s_p_target_update_builder::State> SPTargetUpdateBuilder<S> {
     pub fn bid(mut self, bid: f64) -> Self {
         let sp_update_target_bid = SPUpdateTargetBid { bid: Some(bid) };
         self.bid = Some(sp_update_target_bid);
+        self
+    }
+
+    pub fn state(mut self, state: &str) -> Self {
+        let state = SPUpdateState::from_str(state).unwrap();
+        self.state = Some(state);
         self
     }
 }

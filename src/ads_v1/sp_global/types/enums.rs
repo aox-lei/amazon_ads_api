@@ -300,8 +300,9 @@ pub enum SPGlobalTargetLevel {
     Campaign,
 }
 
-#[derive(Debug, Serialize)]
+#[derive(Debug, Serialize, Deserialize, EnumString, AsRefStr, PartialEq, Eq)]
 #[serde(rename_all = "SCREAMING_SNAKE_CASE")]
+#[strum(serialize_all = "SCREAMING_SNAKE_CASE")]
 pub enum SPGlobalUpdateState {
     Enabled,
     Paused,

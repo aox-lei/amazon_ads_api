@@ -124,10 +124,12 @@ pub struct SPGlobalTargetUpdate {
     pub target_id: String,
     #[builder(field)]
     pub bid: Option<SPGlobalUpdateTargetBid>,
+    #[builder(field)]
+    pub state: Option<SPGlobalUpdateState>,
 
     pub marketplace_configurations: Option<Vec<SPGlobalCreateMarketplaceTargetConfigurations>>,
     pub marketplaces: Option<Vec<SPGlobalMarketplace>>,
-    pub state: Option<SPGlobalUpdateState>,
+
     pub tags: Option<Vec<SPGlobalCreateTag>>,
 }
 
@@ -144,6 +146,12 @@ impl<S: s_p_global_target_update_builder::State> SPGlobalTargetUpdateBuilder<S> 
                 marketplace: SPGlobalMarketplace::from_str(country_code).expect("无效的国家代码"),
             });
         }
+        self
+    }
+
+    pub fn state(mut self, state: &str) -> Self {
+        let state = SPGlobalUpdateState::from_str(state).unwrap();
+        self.state = Some(state);
         self
     }
 }
