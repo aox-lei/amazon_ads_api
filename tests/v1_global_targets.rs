@@ -14,7 +14,7 @@ async fn list_global_targets_test() {
         .call();
     let ads_client = Arc::new(ads_client);
     let filter = ListGlobalTargetsFilter::builder()
-        .ad_group_id_filter(vec!["5000076170728326890"])
+        .ad_group_id_filter(vec!["4999865406785808299"])
         .target_type_filter(vec![SPGlobalTargetType::Theme])
         .build();
     let response = ListGlobalTargets::builder()

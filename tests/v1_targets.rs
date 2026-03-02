@@ -31,7 +31,7 @@ async fn update_target_test() {
         .profile_id(&common::profile_id())
         .call();
     let ads_client = Arc::new(ads_client);
-    let body = SPTargetUpdate::builder("216792859190825").bid(0.02).build();
+    let body = SPTargetUpdate::builder("216792859190825").bid(0.02).state("PAUSED").build();
 
     let api = UpdateTarget::builder()
         .targets(vec![body])
