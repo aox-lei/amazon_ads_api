@@ -36,6 +36,7 @@ dependencies = [
  "cached",
  "chrono",
  "dotenvy",
+ "flate2",
  "http",
  "once_cell",
  "reqwest",

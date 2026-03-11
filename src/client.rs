@@ -68,6 +68,16 @@ impl AdsClient {
     }
 
     #[builder]
+    pub async fn get(&self, path: &str) -> Result<Response> {
+        let url = self.url(path);
+
+        let req_builder = self.inner.get(url);
+
+        let res = req_builder.send().await?.error_for_status()?;
+        Ok(res)
+    }
+
+    #[builder]
     pub async fn post(
         &self,
         path: &str,

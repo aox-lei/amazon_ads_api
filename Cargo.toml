@@ -17,8 +17,9 @@ anyhow = { version = "^1" }
 async-trait = "0.1.89"
 http = "^1"
 cached = { version = "0.56", features = ["async"] }
-chrono = {version="0.4", features = ["serde"]}
+chrono = { version = "0.4", features = ["serde"] }
 serde-inline-default = "1.0.0"
-strum = {version="0.27.2", features = ["derive"]}
+strum = { version = "0.27.2", features = ["derive"] }
+flate2 = { version = "1" }
 [dev-dependencies]
 dotenvy = "0.15"

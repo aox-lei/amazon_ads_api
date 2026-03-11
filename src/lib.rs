@@ -6,3 +6,5 @@ pub mod util;
 pub mod v3;
 pub mod ads_v1;
 pub mod products;
+pub mod reporting;
+pub mod reporting_type;
