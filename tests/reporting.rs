@@ -124,10 +124,6 @@ async fn create_report_targeting() {
                 SpTargetingColumn::CampaignId,
                 SpTargetingColumn::AdGroupName,
                 SpTargetingColumn::AdGroupId,
-                SpTargetingColumn::CampaignBudgetAmount,
-                SpTargetingColumn::CampaignBudgetType,
-                SpTargetingColumn::CampaignBudgetCurrencyCode,
-                SpTargetingColumn::TopOfSearchImpressionShare,
                 SpTargetingColumn::Targeting,
             ],
         )
@@ -150,10 +146,11 @@ async fn get_report() {
         .call();
     let ads_client = Arc::new(ads_client);
     // 7bef9c48-92d9-462f-b66e-549f792e8780 按照广告组分组的报告
+    // 3dd759ce-7bfa-4672-a266-ec80fa9543e0 自动投放分组的报告
 
     let get_report = GetReport::builder()
         .ads_client(ads_client)
-        .report_id("7bef9c48-92d9-462f-b66e-549f792e8780")
+        .report_id("3dd759ce-7bfa-4672-a266-ec80fa9543e0")
         .build();
     let res = get_report.fetch().await.unwrap();
     if res.status == CreateReportStatus::Completed {

@@ -32,7 +32,7 @@ impl AmazonRegion {
             "US" | "CA" | "MX" | "BR" => Some(AmazonRegion::NA),
             // 欧洲 (EU)
             "UK" | "GB" | "DE" | "FR" | "ES" | "IT" | "NL" | "AE" | "SA" | "PL" | "SE" | "TR"
-            | "EG" | "BE" => Some(AmazonRegion::EU),
+            | "EG" | "BE" | "IE" => Some(AmazonRegion::EU),
             // 远东 (FE)
             "JP" | "AU" | "SG" => Some(AmazonRegion::FE),
             _ => None,
