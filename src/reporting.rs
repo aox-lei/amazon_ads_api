@@ -56,16 +56,32 @@ impl<S: create_report_filter_builder::State> CreateReportFilterBuilder<S> {
     where
         S::Configuration: create_report_filter_builder::IsUnset,
     {
-        let converted_columns: Vec<Column> = columns
-            .into_iter()
-            .map(Column::SpCampaigns)
-            .collect();
+        let converted_columns: Vec<Column> = columns.into_iter().map(Column::SpCampaigns).collect();
 
         let report_configuration = AsyncReportConfiguration::builder()
             .columns(converted_columns)
             .report_type_id("spCampaigns")
             .time_unit(time_unit)
             .group_by(vec!["campaign"])
+            .build();
+        self.configuration_inner(report_configuration)
+    }
+
+    pub fn by_ad_group(
+        self,
+        time_unit: TimeUnit,
+        columns: Vec<SpCampaignsColumns>,
+    ) -> CreateReportFilterBuilder<create_report_filter_builder::SetConfiguration<S>>
+    where
+        S::Configuration: create_report_filter_builder::IsUnset,
+    {
+        let converted_columns: Vec<Column> = columns.into_iter().map(Column::SpCampaigns).collect();
+
+        let report_configuration = AsyncReportConfiguration::builder()
+            .columns(converted_columns)
+            .report_type_id("spCampaigns")
+            .time_unit(time_unit)
+            .group_by(vec!["adGroup"])
             .build();
         self.configuration_inner(report_configuration)
     }
@@ -78,10 +94,7 @@ impl<S: create_report_filter_builder::State> CreateReportFilterBuilder<S> {
     where
         S::Configuration: create_report_filter_builder::IsUnset,
     {
-        let converted_columns: Vec<Column> = columns
-            .into_iter()
-            .map(Column::SpTargeting)
-            .collect();
+        let converted_columns: Vec<Column> = columns.into_iter().map(Column::SpTargeting).collect();
 
         let report_configuration = AsyncReportConfiguration::builder()
             .columns(converted_columns)

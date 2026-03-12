@@ -125,6 +125,10 @@ pub enum SpCampaignsColumns {
 
     // 按照campaign分组的指标 - 竞争力指标 (Placement)
     TopOfSearchImpressionShare, // 核心指标。你的广告在所有符合条件的“搜索结果第一页最顶端”展示次数中所占的比例。
+
+    // 按照广告组分组的指标
+    AdGroupName, // 广告组名称
+    AdGroupId,   // 广告组 ID
 }
 
 #[derive(Serialize, Deserialize, Debug, AsRefStr, Display, EnumString, PartialEq, Eq)]

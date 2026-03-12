@@ -59,6 +59,46 @@ async fn create_report() {
 }
 
 #[tokio::test]
+async fn create_report_ad_group() {
+    let ads_client = common::get_ads_client()
+        .profile_id(&common::profile_id())
+        .call();
+    let ads_client = Arc::new(ads_client);
+
+    let filter = CreateReportFilter::builder()
+        .by_ad_group(
+            TimeUnit::Summary,
+            vec![
+                SpCampaignsColumns::Impressions,
+                SpCampaignsColumns::Clicks,
+                SpCampaignsColumns::ClickThroughRate,
+                SpCampaignsColumns::Cost,
+                SpCampaignsColumns::Spend,
+                SpCampaignsColumns::CostPerClick,
+                SpCampaignsColumns::Sales1d,
+                SpCampaignsColumns::Sales7d,
+                SpCampaignsColumns::Sales14d,
+                SpCampaignsColumns::Sales30d,
+                SpCampaignsColumns::StartDate,
+                SpCampaignsColumns::EndDate,
+                SpCampaignsColumns::AdGroupName,
+                SpCampaignsColumns::AdGroupId,
+            ],
+        )
+        .start_date(NaiveDate::parse_from_str("2026-03-01", "%Y-%m-%d").unwrap())
+        .end_date(NaiveDate::parse_from_str("2026-03-09", "%Y-%m-%d").unwrap())
+        .build();
+
+    let res = CreateReport::builder()
+        .ads_client(ads_client)
+        .filter(filter)
+        .build()
+        .fetch()
+        .await;
+    dbg!(&res);
+}
+
+#[tokio::test]
 async fn create_report_targeting() {
     let ads_client = common::get_ads_client()
         .profile_id(&common::profile_id())
@@ -109,10 +149,11 @@ async fn get_report() {
         .profile_id(&common::profile_id())
         .call();
     let ads_client = Arc::new(ads_client);
+    // 7bef9c48-92d9-462f-b66e-549f792e8780 按照广告组分组的报告
 
     let get_report = GetReport::builder()
         .ads_client(ads_client)
-        .report_id("ad0ccc40-fba7-436e-a745-6f500cd49048")
+        .report_id("7bef9c48-92d9-462f-b66e-549f792e8780")
         .build();
     let res = get_report.fetch().await.unwrap();
     if res.status == CreateReportStatus::Completed {
