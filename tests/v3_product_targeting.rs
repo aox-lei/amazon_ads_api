@@ -5,9 +5,7 @@ mod common;
 
 #[tokio::test]
 async fn list_brand_search() {
-    let ads_client = common::get_ads_client()
-        .profile_id(&common::profile_id())
-        .call();
+    let ads_client = common::get_ads_client(None, Some(&common::profile_id()));
     let ads_client = Arc::new(ads_client);
     let api = ListNegativeTargetsBrandsSearch::builder()
         .ads_client(ads_client)

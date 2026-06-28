@@ -1,5 +1,4 @@
 use amazon_ads_api::client;
-use bon::builder;
 use dotenvy::dotenv;
 use std::env;
 
@@ -29,7 +28,6 @@ impl Default for Credential {
 }
 
 #[allow(dead_code)]
-#[builder]
 pub fn get_ads_client(account_id: Option<&str>, profile_id: Option<&str>) -> client::AdsClient {
     let credential = Credential::default();
     let ads_client = client::AdsClient::builder()

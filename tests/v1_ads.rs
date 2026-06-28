@@ -5,9 +5,7 @@ mod common;
 
 #[tokio::test]
 async fn list_ads_test() {
-    let ads_client = common::get_ads_client()
-        .profile_id(&common::profile_id())
-        .call();
+    let ads_client = common::get_ads_client(None, Some(&common::profile_id()));
     let ads_client = Arc::new(ads_client);
     let filter = ListAdsFilter::builder()
         .ad_group_id_filter(vec!["546821283664002"])
@@ -25,9 +23,7 @@ async fn list_ads_test() {
 
 #[tokio::test]
 async fn del_ads_test() {
-    let ads_client = common::get_ads_client()
-        .profile_id(&common::profile_id())
-        .call();
+    let ads_client = common::get_ads_client(None, Some(&common::profile_id()));
     let ads_client = Arc::new(ads_client);
     let response = DelAds::builder()
         .ads_client(ads_client)
@@ -40,9 +36,7 @@ async fn del_ads_test() {
 
 #[tokio::test]
 async fn create_ads_test() {
-    let ads_client = common::get_ads_client()
-        .profile_id(&common::profile_id())
-        .call();
+    let ads_client = common::get_ads_client(None, Some(&common::profile_id()));
     let ads_client = Arc::new(ads_client);
     let product = CreateAds::by_skus()
         .ad_group_id("546821283664002")

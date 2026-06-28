@@ -1,6 +1,6 @@
 [package]
 name = "amazon_ads_api"
-version = "0.3.3"
+version = "0.3.4"
 edition = "2021"
 
 [dependencies]
@@ -21,5 +21,6 @@ chrono = { version = "0.4", features = ["serde"] }
 serde-inline-default = "1.0.0"
 strum = { version = "0.27.2", features = ["derive"] }
 flate2 = { version = "1" }
+
 [dev-dependencies]
 dotenvy = "0.15"

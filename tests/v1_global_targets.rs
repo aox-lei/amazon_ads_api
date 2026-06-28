@@ -9,12 +9,10 @@ mod common;
 
 #[tokio::test]
 async fn list_global_targets_test() {
-    let ads_client = common::get_ads_client()
-        .account_id(&common::account_id())
-        .call();
+    let ads_client = common::get_ads_client(Some(&common::account_id()), None);
     let ads_client = Arc::new(ads_client);
     let filter = ListGlobalTargetsFilter::builder()
-        .ad_group_id_filter(vec!["4999865406785808299"])
+        .ad_group_id_filter(vec!["4999955411336918637"])
         .target_type_filter(vec![SPGlobalTargetType::Theme])
         .build();
     let response = ListGlobalTargets::builder()
@@ -29,9 +27,7 @@ async fn list_global_targets_test() {
 
 #[tokio::test]
 async fn update_global_target_test() {
-    let ads_client = common::get_ads_client()
-        .account_id(&common::account_id())
-        .call();
+    let ads_client = common::get_ads_client(Some(&common::account_id()), None);
     let ads_client = Arc::new(ads_client);
     let body = SPGlobalTargetUpdate::builder("4999920531756562841")
         .bid("GB", 0.1)

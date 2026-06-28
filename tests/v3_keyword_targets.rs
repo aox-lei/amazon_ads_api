@@ -7,9 +7,7 @@ mod common;
 
 #[tokio::test]
 async fn list_keyword_recommendations() {
-    let ads_client = common::get_ads_client()
-        .profile_id(&common::profile_id())
-        .call();
+    let ads_client = common::get_ads_client(None, Some(&common::profile_id()));
     let ads_client = Arc::new(ads_client);
     let filter = KeywordRecommendationsFilterForASINS::builder()
         .asins(vec!["B0FMS7N9W5"])

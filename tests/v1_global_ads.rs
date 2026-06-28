@@ -5,9 +5,7 @@ mod common;
 
 #[tokio::test]
 async fn list_ads_test() {
-    let ads_client = common::get_ads_client()
-        .account_id(&common::account_id())
-        .call();
+    let ads_client = common::get_ads_client(Some(&common::account_id()), None);
     let ads_client = Arc::new(ads_client);
     let filter = ListAdsFilter::builder()
         .max_results(10)
@@ -31,9 +29,7 @@ async fn list_ads_test() {
 
 #[tokio::test]
 async fn create_ads_test() {
-    let ads_client = common::get_ads_client()
-        .account_id(&common::account_id())
-        .call();
+    let ads_client = common::get_ads_client(Some(&common::account_id()), None);
     let ads_client = Arc::new(ads_client);
     let product = CreateAds::by_skus()
         .ad_group_id("4999899225094945252")

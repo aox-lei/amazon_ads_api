@@ -7,12 +7,10 @@ mod common;
 
 #[tokio::test]
 async fn list_targets_test() {
-    let ads_client = common::get_ads_client()
-        .profile_id(&common::profile_id())
-        .call();
+    let ads_client = common::get_ads_client(None, Some(&common::profile_id()));
     let ads_client = Arc::new(ads_client);
     let filter = ListTargetsFilter::builder()
-        .ad_group_id_filter(vec!["456590468871638"])
+        .ad_group_id_filter(vec!["4999955411336918637"])
         .target_type_filter(vec![SPTargetType::Theme])
         .build();
     let response = ListTargets::builder()
@@ -27,9 +25,7 @@ async fn list_targets_test() {
 
 #[tokio::test]
 async fn update_target_test() {
-    let ads_client = common::get_ads_client()
-        .profile_id(&common::profile_id())
-        .call();
+    let ads_client = common::get_ads_client(None, Some(&common::profile_id()));
     let ads_client = Arc::new(ads_client);
     let body = SPTargetUpdate::builder("216792859190825").bid(0.02).state("PAUSED").build();
 

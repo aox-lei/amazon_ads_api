@@ -7,9 +7,7 @@ mod common;
 
 #[tokio::test]
 async fn list_product_ads_test() {
-    let ads_client = common::get_ads_client()
-        .profile_id(&common::profile_id())
-        .call();
+    let ads_client = common::get_ads_client(None, Some(&common::profile_id()));
     let ads_client = Arc::new(ads_client);
     let filter = ListProductAdsFilter::builder()
         .include_extended_data_fields(true)
@@ -26,9 +24,7 @@ async fn list_product_ads_test() {
 
 #[tokio::test]
 async fn create_product_ads_test() {
-    let ads_client = common::get_ads_client()
-        .profile_id(&common::profile_id())
-        .call();
+    let ads_client = common::get_ads_client(None, Some(&common::profile_id()));
     let ads_client = Arc::new(ads_client);
 
     let item = ProductAdsItemForCreate::builder()

@@ -12,9 +12,7 @@ mod common;
 
 #[tokio::test]
 async fn create_report() {
-    let ads_client = common::get_ads_client()
-        .profile_id(&common::profile_id())
-        .call();
+    let ads_client = common::get_ads_client(None, Some(&common::profile_id()));
     let ads_client = Arc::new(ads_client);
 
     let filter = CreateReportFilter::builder()
@@ -60,9 +58,7 @@ async fn create_report() {
 
 #[tokio::test]
 async fn create_report_ad_group() {
-    let ads_client = common::get_ads_client()
-        .profile_id(&common::profile_id())
-        .call();
+    let ads_client = common::get_ads_client(None, Some(&common::profile_id()));
     let ads_client = Arc::new(ads_client);
 
     let filter = CreateReportFilter::builder()
@@ -100,9 +96,7 @@ async fn create_report_ad_group() {
 
 #[tokio::test]
 async fn create_report_targeting() {
-    let ads_client = common::get_ads_client()
-        .profile_id(&common::profile_id())
-        .call();
+    let ads_client = common::get_ads_client(None, Some(&common::profile_id()));
     let ads_client = Arc::new(ads_client);
 
     let filter = CreateReportFilter::builder()
@@ -141,9 +135,7 @@ async fn create_report_targeting() {
 }
 #[tokio::test]
 async fn get_report() {
-    let ads_client = common::get_ads_client()
-        .profile_id(&common::profile_id())
-        .call();
+    let ads_client = common::get_ads_client(None, Some(&common::profile_id()));
     let ads_client = Arc::new(ads_client);
     // 7bef9c48-92d9-462f-b66e-549f792e8780 按照广告组分组的报告
     // 3dd759ce-7bfa-4672-a266-ec80fa9543e0 自动投放分组的报告

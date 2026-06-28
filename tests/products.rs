@@ -5,9 +5,7 @@ mod common;
 
 #[tokio::test]
 async fn list_product() {
-    let ads_client = common::get_ads_client()
-        .profile_id(&common::profile_id())
-        .call();
+    let ads_client = common::get_ads_client(None, Some(&common::profile_id()));
     let ads_client = Arc::new(ads_client);
     let filter = ProductMetadataFilter::builder()
         .check_eligibility(false)

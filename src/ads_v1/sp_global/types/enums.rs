@@ -49,6 +49,7 @@ pub enum SPGlobalMarketplace {
     SG,
     TR,
     US,
+    IE
 }
 
 #[derive(Debug, Default, Serialize, Deserialize, AsRefStr, PartialEq, Eq)]
